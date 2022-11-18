@@ -7,3 +7,4 @@ dependencies:
     - matplotlib
     - plotly
     - scikit-learn
+    - torch
