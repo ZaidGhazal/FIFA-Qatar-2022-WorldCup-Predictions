@@ -8,3 +8,4 @@ dependencies:
     - plotly
     - scikit-learn
     - torch
+    - ipykernel
