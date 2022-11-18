@@ -1,0 +1,9 @@
+name: fifa_env
+dependencies:
+  - python=3.8
+  - pip:
+    - pandas
+    - numpy
+    - matplotlib
+    - plotly
+    - scikit-learn
