@@ -16,18 +16,18 @@ st.set_page_config(
 
 # Title container
 with st.container():
-   st.title('FIFA 2022 World Cup ⚽ Match Winner Predictor 🏆')
-   
+    st.title('FIFA 2022 World Cup ⚽ Match Winner Predictor 🏆')
+
 # Challenge container
 flags_dict = {
     'Argentina': '🇦🇷',
     'Portugal': '🇵🇹',
     'Ecuador': '🇪🇨',
-    'Netherlands':'🇳🇱',
+    'Netherlands': '🇳🇱',
     'Brazil': '🇧🇷',
     'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
     'Iran': '🇮🇷',
-    'USA':'🇺🇸',
+    'USA': '🇺🇸',
     'Wales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
     'Mexico': '🇲🇽',
     'Poland': '🇵🇱',
@@ -53,39 +53,39 @@ flags_dict = {
     'Qatar': '🇶🇦',
     'Belgium': '🇧🇪',
 }
-teams_flags_ls = [team+" "+flag for team, flag in flags_dict.items()]
+teams_flags_ls = [team + " " + flag for team, flag in flags_dict.items()]
 teams_flags_ls.insert(0, "Select Team")
 flags_dict = collections.OrderedDict(sorted(flags_dict.items()))
 
-## ------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 with st.container():
     st.header('Insert Match')
-## Drop lists and display flage
+# Drop lists and display flage
     col1, col2, col3 = st.columns(3)
     with col1:
         country1 = st.selectbox('Select **1st Team**', teams_flags_ls)
     with col2:
-       components.html(
-              """
+        components.html(
+            """
                 <div style="text-align: center; font-size: 30px; font-weight: bold; margin-top: 10px;">VS</div>
                 """,
-       )
+        )
     with col3:
-        country2 = st.selectbox('Select **2nd Team**', teams_flags_ls )
+        country2 = st.selectbox('Select **2nd Team**', teams_flags_ls)
 
 st.empty().text(" ")
 st.empty().text(" ")
 
-## ------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # Prediction container
 with st.container():
-    
+
     if country1 == teams_flags_ls[0]:
         pass
     elif country1 == country2 and country1 != teams_flags_ls[0]:
         st.warning('🤔 Please Select Different Teams')
     else:
-    ## TODO: Model CODE HERE
+        # TODO: Model CODE HERE
         pass
 
 # Footer container
@@ -94,6 +94,5 @@ with st.container():
 #     st.write('Source code available on [GitHub]')
 
 
-
 # Result container
-## Display the final result
+# Display the final result
