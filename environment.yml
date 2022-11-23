@@ -14,3 +14,4 @@ dependencies:
     - lxml
     - emoji
     - emoji-country-flag
+    - pre-commit
