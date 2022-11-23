@@ -132,7 +132,7 @@ with st.container():
             result = country1
             difference = 2
             # st.markdown("<h2 style='text-align: center; color: white;'>" +"The Winner "+img_to_html("15",'app/assets/Asset_2.png')+ "</h2>", unsafe_allow_html=True)
-            st.markdown("<h2 style='text-align: center; color: white;'>The Winnerrrrrrr 🏆</h2>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align: center; color: white;'>The Winner 🏆</h2>", unsafe_allow_html=True)
             st.markdown("<h2 style='text-align: center; color: white;'>______________________</h2>", unsafe_allow_html=True)
             st.markdown(f"<h1 style='text-align: center; color: white;'>{result}</h1>", unsafe_allow_html=True)
             st.markdown(f"<h3 style='text-align: center; color: white;'>By {difference} Goals Difference </h3>", unsafe_allow_html=True)
