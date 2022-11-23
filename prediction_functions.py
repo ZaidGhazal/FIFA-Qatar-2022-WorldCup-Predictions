@@ -4,6 +4,8 @@ from pickle import load
 import numpy as np
 import pandas as pd
 
+matches_counter: int = 0
+
 
 def remove_whitespaces(df: pd.DataFrame) -> None:
     """Remove whitespaces from column names and string values
@@ -74,7 +76,8 @@ def predict(data: pd.DataFrame) -> pd.DataFrame:
 
 
 def get_prediction(team_1, team_2):
-
+    matches_counter += 1
+    print(f"Match {matches_counter}: {team_1} vs {team_2}")
     mask_1 = (lookup_table["1st_team"] == team_1) & (
         lookup_table["2nd_team"] == team_2
     )

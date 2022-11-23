@@ -13,8 +13,6 @@ sys.path.insert(0, "")
 
 from prediction_functions import get_prediction
 
-
-
 def img_to_bytes(img_path):
     img_bytes = Path(img_path).read_bytes()
     encoded = base64.b64encode(img_bytes).decode()
@@ -145,8 +143,7 @@ with st.container():
         )
     elif country2 != teams_flags_ls[0] and country1 != teams_flags_ls[0]:
         with st.spinner(""):
-            time.sleep(4)
-            # TODO: Model CODE HERE
+            time.sleep(3)
             print(country1, country2)
             prediction = get_prediction(
                 country1.rsplit(" ", 1)[0], country2.rsplit(" ", 1)[0]
