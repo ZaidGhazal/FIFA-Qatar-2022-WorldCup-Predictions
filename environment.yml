@@ -1,0 +1,17 @@
+name: worldcup-winner-predictor-env
+dependencies:
+  - python=3.8.15
+  - pip:
+    - pandas
+    - numpy
+    - matplotlib
+    - plotly
+    - scikit-learn
+    - torch
+    - ipykernel
+    - openpyxl
+    - beautifulsoup4
+    - lxml
+    - emoji
+    - emoji-country-flag
+    - pre-commit
