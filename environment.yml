@@ -1,6 +1,6 @@
 name: fifa_env
 dependencies:
-  - python=3.8
+  - python=3.8.15
   - pip:
     - pandas
     - numpy
@@ -12,3 +12,5 @@ dependencies:
     - openpyxl
     - beautifulsoup4
     - lxml
+    - emoji
+    - emoji-country-flag
