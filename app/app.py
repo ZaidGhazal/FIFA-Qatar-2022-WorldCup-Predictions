@@ -2,6 +2,10 @@ import base64
 import collections
 import time
 from pathlib import Path
+import sys
+sys.path.insert(0, "")
+
+from  prediction_functions import get_prediction
 
 import emoji
 import flag
@@ -139,11 +143,30 @@ with st.container():
         )
     elif country2 != teams_flags_ls[0] and country1 != teams_flags_ls[0]:
         with st.spinner(""):
-            time.sleep(1)
+            time.sleep(4)
             # TODO: Model CODE HERE
+            print(country1, country2)
+            prediction = get_prediction(country1.rsplit(' ', 1)[0], country2.rsplit(' ', 1)[0])
+            team_1 = prediction[0]
+            team_2 = prediction[1]
+            difference = prediction[2]
             
-            result = country1
-            difference = 2
+            if difference > 0:
+                winner = team_1
+            elif difference < 0:
+                winner = team_2
+            else:
+                winner = "Draw"
+            
+            prob = abs(difference)/2
+            prob = round(prob, 2)
+
+            if prob > 1:
+                prob = 1
+            
+            prob = prob * 100
+            
+
             st.markdown(
                 "<h2 style='text-align: center; color: white;'>The Winner 🏆</h2>",
                 unsafe_allow_html=True,
@@ -153,13 +176,13 @@ with st.container():
                 unsafe_allow_html=True,
             )
             st.markdown(
-                f"<h1 style='text-align: center; color: white;'>{result}</h1>",
+                f"<h1 style='text-align: center; color: white;'>{winner} {flags_dict.get(winner)}</h1>",
                 unsafe_allow_html=True,
             )
-            st.markdown(
-                f"<h3 style='text-align: center; color: white;'>By {difference} Goals Difference </h3>",
-                unsafe_allow_html=True,
-            )
+            # st.markdown(
+            #     f"<h3 style='text-align: center; color: white;'>By {prob} Probability </h3>",
+            #     unsafe_allow_html=True,
+            # )
 
 # ------------------------------------------------------------------------
 #  st.image("app/assets/Asset_2.png", width=20)
