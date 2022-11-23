@@ -52,11 +52,7 @@ add_bg_from_local('app/assets/Asset_5.png')
 # Title container
 with st.container():
     st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html("50%",'app/assets/Asset_1.png')+"</p>", unsafe_allow_html=True)
-    # st.image("app/assets/Asset_1.png", width=500)
-    # st.empty().text(" ")
 
-    
-    # st.title('FIFA 2022 World Cup ⚽ Match Winner Predictor 🏆')
 
 # Challenge container
 flags_dict = {
@@ -97,9 +93,7 @@ teams_flags_ls = [team + " " + flag for team, flag in flags_dict.items()]
 teams_flags_ls.insert(0, "Select Team")
 flags_dict = collections.OrderedDict(sorted(flags_dict.items()))
 
-# ------------------------------------------------------------------------
 with st.container():
-    # components.html("""<p style="color:white width:150pt;">Insert Match</p>""")
     st.markdown("<h2 style='text-align: left; color: white;'>Insert Match</h2>", unsafe_allow_html=True)
 # Drop lists and display flage
     col1, col2, col3 = st.columns(3)
@@ -117,10 +111,7 @@ with st.container():
     with col3:
         country2 = st.selectbox( " ",options=teams_flags_ls, label_visibility="collapsed")
 
-# st.empty().text(" ")
-# st.empty().text(" ")
 
-# ------------------------------------------------------------------------
 # Prediction container
 with st.container():
 
@@ -134,7 +125,6 @@ with st.container():
             # TODO: Model CODE HERE
             result = country1
             difference = 2
-            # st.markdown("<h2 style='text-align: center; color: white;'>" +"The Winner "+img_to_html("15",'app/assets/Asset_2.png')+ "</h2>", unsafe_allow_html=True)
             st.markdown("<h2 style='text-align: center; color: white;'>The Winner 🏆</h2>", unsafe_allow_html=True)
             st.markdown("<h2 style='text-align: center; color: white;'>______________________</h2>", unsafe_allow_html=True)
             st.markdown(f"<h1 style='text-align: center; color: white;'>{result}</h1>", unsafe_allow_html=True)
