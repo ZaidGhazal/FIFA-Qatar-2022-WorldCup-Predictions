@@ -13,9 +13,6 @@ sys.path.insert(0, "")
 
 from prediction_functions import get_prediction
 
-if "matches_counter" not in st.session_state:
-    st.session_state.matches_counter = 0
-
 
 def img_to_bytes(img_path):
     img_bytes = Path(img_path).read_bytes()
@@ -162,9 +159,6 @@ with st.container():
                 winner = team_2
             else:
                 winner = "Draw"
-
-            st.session_state.matches_counter += 1
-            st.write(st.session_state.matches_counter)
 
             flag = flags_dict.get(winner) if winner != "Draw" else ""
 
