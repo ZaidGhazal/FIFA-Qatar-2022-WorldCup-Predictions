@@ -5,6 +5,7 @@ import time
 import base64
 from pathlib import Path
 import emoji
+import flag
 
 def img_to_bytes(img_path):
     img_bytes = Path(img_path).read_bytes()
@@ -59,38 +60,38 @@ with st.container():
 
 # Challenge container
 flags_dict = {
-    'Argentina': emoji.emojize(":flag_ar:"),
-    'Portugal': emoji.emojize(":flag_pt:"),
-    'Ecuador': emoji.emojize(":flag_ec:"),
-    'Netherlands': emoji.emojize(":flag_nl:"),
-    'Brazil': emoji.emojize(":flag_br:"),
-    'England': emoji.emojize(":flag_gb:"),
-    'Iran': emoji.emojize(":flag_ir:"),
-    'USA': emoji.emojize(":flag_us:"),
-    'Wales': emoji.emojize(":flag_gb:"),
-    'Mexico': emoji.emojize(":flag_mx:"),
-    'Poland': emoji.emojize(":flag_pl:"),
-    'France': emoji.emojize(":flag_fr:"),
-    'Australia': emoji.emojize(":flag_au:"),
-    'Denmark': emoji.emojize(":flag_dk:"),
-    'Tunisia': emoji.emojize(":flag_tn:"),
-    'Costa Rica': emoji.emojize(":flag_cr:"),
-    'Germany': emoji.emojize(":flag_de:"),
-    'Japan': emoji.emojize(":flag_jp:"),
-    'South Korea': emoji.emojize(":flag_kr:"),
-    'Croatia': emoji.emojize(":flag_hr:"),
-    'Canada': emoji.emojize(":flag_ca:"),
-    'Morocco': emoji.emojize(":flag_ma:"),
-    'Serbia': emoji.emojize(":flag_rs:"),
-    'Switzerland': emoji.emojize(":flag_ch:"),
-    'Cameroon': emoji.emojize(":flag_cm:"),
-    'Ghana': emoji.emojize(":flag_gh:"),
-    'Uruguay': emoji.emojize(":flag_uy:"),
-    'Saudi Arabia': emoji.emojize(":flag_sa:"),
-    'Senegal': emoji.emojize(":flag_sn:"),
-    'Spain': emoji.emojize(":flag_es:"),
-    'Qatar': emoji.emojize(":flag_qa:"),
-    'Belgium': emoji.emojize(":flag_be:"),
+    'Argentina': flag.flag(":AR:"),
+    'Portugal': flag.flag(":PT:"),
+    'Ecuador': flag.flag(":EC:"),
+    'Netherlands': flag.flag(":NL:"),
+    'Brazil': flag.flag(":BR:"),
+    'England': flag.flag(":GB:"),
+    'Iran': flag.flag(":IR:"),
+    'USA': flag.flag(":US:"),
+    'Wales': flag.flag(":GB:"),
+    'Mexico': flag.flag(":MX:"),
+    'Poland': flag.flag(":PL:"),
+    'France': flag.flag(":FR:"),
+    'Australia': flag.flag(":AU:"),
+    'Denmark': flag.flag(":DK:"),
+    'Tunisia': flag.flag(":TN:"),
+    'Costa Rica': flag.flag(":CR:"),
+    'Germany': flag.flag(":DE:"),
+    'Japan': flag.flag(":JP:"),
+    'South Korea': flag.flag(":KR:"),
+    'Croatia': flag.flag(":HR:"),
+    'Canada': flag.flag(":CA:"),
+    'Morocco': flag.flag(":MA:"),
+    'Serbia': flag.flag(":RS:"),
+    'Switzerland': flag.flag(":CH:"),
+    'Cameroon': flag.flag(":CM:"),
+    'Ghana': flag.flag(":GH:"),
+    'Uruguay': flag.flag(":UY:"),
+    'Saudi Arabia': flag.flag(":SA:"),
+    'Senegal': flag.flag(":SN:"),
+    'Spain': flag.flag(":ES:"),
+    'Qatar': flag.flag(":QA:"),
+    'Belgium': flag.flag(":BE:"),
 }
 teams_flags_ls = [team + " " + flag for team, flag in flags_dict.items()]
 teams_flags_ls.insert(0, "Select Team")
