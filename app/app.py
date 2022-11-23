@@ -112,6 +112,7 @@ with st.container():
             """
                 <div style="text-align: center; font-size: 30px; font-weight: bold; margin-top: 1px;color: white;">VS</div>
                 """,
+            height=50,
         )
     with col3:
         country2 = st.selectbox( " ",options=teams_flags_ls, label_visibility="collapsed")
