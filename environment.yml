@@ -13,3 +13,4 @@ dependencies:
     - beautifulsoup4
     - lxml
     - emoji
+    - emoji-country-flag
