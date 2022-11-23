@@ -1,6 +1,7 @@
 name: worldcup-winner-predictor-env
 dependencies:
   - python=3.8.15
+  - pip
   - pip:
     - pandas
     - numpy
@@ -15,3 +16,4 @@ dependencies:
     - emoji
     - emoji-country-flag
     - pre-commit
+    - black
