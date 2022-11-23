@@ -123,6 +123,7 @@ with st.container():
         with st.spinner(""):
             time.sleep(1)
             # TODO: Model CODE HERE
+            
             result = country1
             difference = 2
             st.markdown("<h2 style='text-align: center; color: white;'>The Winner 🏆</h2>", unsafe_allow_html=True)
