@@ -1,4 +1,4 @@
-name: fifa_env
+name: worldcup-winner-predictor-env
 dependencies:
   - python=3.8.15
   - pip:
