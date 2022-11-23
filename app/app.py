@@ -125,7 +125,7 @@ with st.container():
     if country1 == teams_flags_ls[0]:
         pass
     elif country1 == country2 and country1 != teams_flags_ls[0]:
-        st.warning(f'{emoji.emojize(":thikink_face:")} Please Select Different Teams')
+        st.warning(f'{emoji.emojize(":thiking_face:")} Please Select Different Teams')
     elif country2 != teams_flags_ls[0] and country1 != teams_flags_ls[0]:
         with st.spinner(""):
             time.sleep(1)
