@@ -8,10 +8,10 @@ import emoji
 import flag
 import streamlit as st
 import streamlit.components.v1 as components
-
+sys.path.insert(0, "")
 from prediction_functions import get_prediction
 
-sys.path.insert(0, "")
+
 
 
 def img_to_bytes(img_path):
@@ -154,9 +154,9 @@ with st.container():
             team_2 = prediction[1]
             difference = prediction[2]
 
-            if difference > 0.2:
+            if difference > 0.1:
                 winner = team_1
-            elif difference < -0.2:
+            elif difference < -0.1:
                 winner = team_2
             else:
                 winner = "Draw"
