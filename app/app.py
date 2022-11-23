@@ -164,7 +164,7 @@ with st.container():
                 winner = "Draw"
 
             st.session_state.matches_counter += 1
-            print("total matches counter: ", st.session_state.matches_counter)
+            st.write(st.session_state.matches_counter)
 
             flag = flags_dict.get(winner) if winner != "Draw" else ""
 
