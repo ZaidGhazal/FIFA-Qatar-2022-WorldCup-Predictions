@@ -51,7 +51,7 @@ st.set_page_config(
 add_bg_from_local('app/assets/Asset_5.png')  
 # Title container
 with st.container():
-    st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html("500",'app/assets/Asset_1.png')+"</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html("50%",'app/assets/Asset_1.png')+"</p>", unsafe_allow_html=True)
     # st.image("app/assets/Asset_1.png", width=500)
     # st.empty().text(" ")
 
