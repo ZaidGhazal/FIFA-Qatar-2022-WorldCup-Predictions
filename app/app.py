@@ -4,6 +4,7 @@ import streamlit.components.v1 as components
 import time 
 import base64
 from pathlib import Path
+import emoji
 
 def img_to_bytes(img_path):
     img_bytes = Path(img_path).read_bytes()
@@ -35,7 +36,7 @@ def add_bg_from_local(image_file):
 
 st.set_page_config(
     page_title="FIFA22 Winner Predictor",
-    page_icon="🏆",
+    page_icon=emoji.emojize(":trophy:"),
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
@@ -58,38 +59,38 @@ with st.container():
 
 # Challenge container
 flags_dict = {
-    'Argentina': '🇦🇷',
-    'Portugal': '🇵🇹',
-    'Ecuador': '🇪🇨',
-    'Netherlands': '🇳🇱',
-    'Brazil': '🇧🇷',
-    'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-    'Iran': '🇮🇷',
-    'USA': '🇺🇸',
-    'Wales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
-    'Mexico': '🇲🇽',
-    'Poland': '🇵🇱',
-    'France': '🇫🇷',
-    'Australia': '🇦🇺',
-    'Denmark': '🇩🇰',
-    'Tunisia': '🇹🇳',
-    'Costa Rica': '🇨🇷',
-    'Germany': '🇩🇪',
-    'Japan': '🇯🇵',
-    'South Korea': '🇰🇷',
-    'Croatia': '🇭🇷',
-    'Canada': '🇨🇦',
-    'Morocco': '🇲🇦',
-    'Serbia': '🇷🇸',
-    'Switzerland': '🇨🇭',
-    'Cameroon': '🇨🇲',
-    'Ghana': '🇬🇭',
-    'Uruguay': '🇺🇾',
-    'Saudi Arabia': '🇸🇦',
-    'Senegal': '🇸🇳',
-    'Spain': '🇪🇸',
-    'Qatar': '🇶🇦',
-    'Belgium': '🇧🇪',
+    'Argentina': emoji.emojize(":flag_ar:"),
+    'Portugal': emoji.emojize(":flag_pt:"),
+    'Ecuador': emoji.emojize(":flag_ec:"),
+    'Netherlands': emoji.emojize(":flag_nl:"),
+    'Brazil': emoji.emojize(":flag_br:"),
+    'England': emoji.emojize(":flag_gb:"),
+    'Iran': emoji.emojize(":flag_ir:"),
+    'USA': emoji.emojize(":flag_us:"),
+    'Wales': emoji.emojize(":flag_gb:"),
+    'Mexico': emoji.emojize(":flag_mx:"),
+    'Poland': emoji.emojize(":flag_pl:"),
+    'France': emoji.emojize(":flag_fr:"),
+    'Australia': emoji.emojize(":flag_au:"),
+    'Denmark': emoji.emojize(":flag_dk:"),
+    'Tunisia': emoji.emojize(":flag_tn:"),
+    'Costa Rica': emoji.emojize(":flag_cr:"),
+    'Germany': emoji.emojize(":flag_de:"),
+    'Japan': emoji.emojize(":flag_jp:"),
+    'South Korea': emoji.emojize(":flag_kr:"),
+    'Croatia': emoji.emojize(":flag_hr:"),
+    'Canada': emoji.emojize(":flag_ca:"),
+    'Morocco': emoji.emojize(":flag_ma:"),
+    'Serbia': emoji.emojize(":flag_rs:"),
+    'Switzerland': emoji.emojize(":flag_ch:"),
+    'Cameroon': emoji.emojize(":flag_cm:"),
+    'Ghana': emoji.emojize(":flag_gh:"),
+    'Uruguay': emoji.emojize(":flag_uy:"),
+    'Saudi Arabia': emoji.emojize(":flag_sa:"),
+    'Senegal': emoji.emojize(":flag_sn:"),
+    'Spain': emoji.emojize(":flag_es:"),
+    'Qatar': emoji.emojize(":flag_qa:"),
+    'Belgium': emoji.emojize(":flag_be:"),
 }
 teams_flags_ls = [team + " " + flag for team, flag in flags_dict.items()]
 teams_flags_ls.insert(0, "Select Team")
@@ -124,7 +125,7 @@ with st.container():
     if country1 == teams_flags_ls[0]:
         pass
     elif country1 == country2 and country1 != teams_flags_ls[0]:
-        st.warning('🤔 Please Select Different Teams')
+        st.warning(f'{emoji.emojize(":thikink_face:")} Please Select Different Teams')
     elif country2 != teams_flags_ls[0] and country1 != teams_flags_ls[0]:
         with st.spinner(""):
             time.sleep(1)
