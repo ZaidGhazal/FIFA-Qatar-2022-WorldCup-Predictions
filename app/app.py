@@ -9,9 +9,10 @@ import flag
 import streamlit as st
 import streamlit.components.v1 as components
 
+sys.path.insert(0, "")
+
 from prediction_functions import get_prediction
 
-sys.path.insert(0, "")
 
 
 def img_to_bytes(img_path):
