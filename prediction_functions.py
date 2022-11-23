@@ -1,6 +1,9 @@
-import pandas as pd
-import numpy as np
+import os
 from pickle import load
+
+import numpy as np
+import pandas as pd
+
 
 def remove_whitespaces(df: pd.DataFrame) -> None:
     """Remove whitespaces from column names and string values
@@ -12,17 +15,25 @@ def remove_whitespaces(df: pd.DataFrame) -> None:
     """
     # Remove whitespace from each column name
     df.columns = df.columns.str.strip()
-    
+
     # Remove whitespace from each string value
     categorical_columns = df.select_dtypes("O").columns
     for column in categorical_columns:
         df[column] = df[column].str.strip()
 
+
 lookup_table = pd.read_csv("data/dataset/lookup_table.csv")
 remove_whitespaces(lookup_table)
 
-model = load(open('models/regression/AdaBoostRegressor.pkl', 'rb'))
-encoder =load(open('models/encoders/countries_encoder.pkl', 'rb'))
+models_list: list = []
+for regressor in os.listdir("models/regression"):
+    if regressor.endswith(".pkl"):
+        temp_model = load(
+            open(os.path.join("models/regression", regressor), "rb")
+        )
+        models_list.append(temp_model)
+
+encoder = load(open("models/encoders/countries_encoder.pkl", "rb"))
 
 
 def predict(data: pd.DataFrame) -> pd.DataFrame:
@@ -38,23 +49,37 @@ def predict(data: pd.DataFrame) -> pd.DataFrame:
     pd.DataFrame
         Dataframe containing the predictions
     """
-    
+
     # Encode categorical features
-    data.loc[0, "1st_team"] = encoder.transform(np.array(data.loc[0, "1st_team"]).reshape(1,))
-    data.loc[0, "2nd_team"] = encoder.transform(np.array(data.loc[0, "2nd_team"]).reshape(1,))
-    
+    data.loc[0, "1st_team"] = encoder.transform(
+        np.array(data.loc[0, "1st_team"]).reshape(
+            1,
+        )
+    )
+    data.loc[0, "2nd_team"] = encoder.transform(
+        np.array(data.loc[0, "2nd_team"]).reshape(
+            1,
+        )
+    )
+
     # Make predictions
 
-    predictions = model.predict(data)
-    
-    
-    return predictions
+    predictions_list: list = []
+    for model in models_list:
+        predictions_list.append(model.predict(data))
+
+    prediction = np.mean(predictions_list)
+
+    return prediction
 
 
 def get_prediction(team_1, team_2):
-
-    mask_1 = (lookup_table["1st_team"] == team_1) & (lookup_table["2nd_team"] == team_2)
-    mask_2 = (lookup_table["1st_team"] == team_2) & (lookup_table["2nd_team"] == team_1)
+    mask_1 = (lookup_table["1st_team"] == team_1) & (
+        lookup_table["2nd_team"] == team_2
+    )
+    mask_2 = (lookup_table["1st_team"] == team_2) & (
+        lookup_table["2nd_team"] == team_1
+    )
 
     team_1_stats = lookup_table[mask_1]
     team_2_stats = lookup_table[mask_2]
@@ -66,21 +91,18 @@ def get_prediction(team_1, team_2):
         first_team = team_1_stats.loc[0, "1st_team"]
         second_team = team_1_stats.loc[0, "2nd_team"]
         prediction = predict(team_1_stats)
-        
 
-    
     elif not team_2_stats.empty:
         team_2_stats.reset_index(drop=True, inplace=True)
         first_team = team_2_stats.loc[0, "1st_team"]
         second_team = team_2_stats.loc[0, "2nd_team"]
         prediction = predict(team_2_stats)
-        
+
     else:
         prediction = np.nan
         raise ValueError("No match in the lookup table found")
-    
-    return (first_team, second_team, prediction[0])
- 
+
+    return (first_team, second_team, prediction)
 
 
 if __name__ == "__main__":

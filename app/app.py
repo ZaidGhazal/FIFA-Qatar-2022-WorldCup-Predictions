@@ -1,16 +1,20 @@
 import base64
 import collections
+import sys
 import time
 from pathlib import Path
-import sys
-sys.path.insert(0, "")
-
-from  prediction_functions import get_prediction
 
 import emoji
 import flag
 import streamlit as st
 import streamlit.components.v1 as components
+
+sys.path.insert(0, "")
+
+from prediction_functions import get_prediction
+
+if "matches_counter" not in st.session_state:
+    st.session_state.matches_counter = 0
 
 
 def img_to_bytes(img_path):
@@ -75,10 +79,10 @@ flags_dict = {
     "Ecuador": flag.flag(":EC:"),
     "Netherlands": flag.flag(":NL:"),
     "Brazil": flag.flag(":BR:"),
-    "England": flag.flag(":GB:"),
+    "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
     "Iran": flag.flag(":IR:"),
     "United States": flag.flag(":US:"),
-    "Wales": flag.flag(":GB:"),
+    "Wales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
     "Mexico": flag.flag(":MX:"),
     "Poland": flag.flag(":PL:"),
     "France": flag.flag(":FR:"),
@@ -143,29 +147,26 @@ with st.container():
         )
     elif country2 != teams_flags_ls[0] and country1 != teams_flags_ls[0]:
         with st.spinner(""):
-            time.sleep(4)
-            # TODO: Model CODE HERE
+            time.sleep(3)
             print(country1, country2)
-            prediction = get_prediction(country1.rsplit(' ', 1)[0], country2.rsplit(' ', 1)[0])
+            prediction = get_prediction(
+                country1.rsplit(" ", 1)[0], country2.rsplit(" ", 1)[0]
+            )
             team_1 = prediction[0]
             team_2 = prediction[1]
             difference = prediction[2]
-            
-            if difference > 0:
+
+            if difference > 0.1:
                 winner = team_1
-            elif difference < 0:
+            elif difference < -0.1:
                 winner = team_2
             else:
                 winner = "Draw"
-            
-            prob = abs(difference)/2
-            prob = round(prob, 2)
 
-            if prob > 1:
-                prob = 1
-            
-            prob = prob * 100
-            
+            st.session_state.matches_counter += 1
+            print("total matches counter: ", st.session_state.matches_counter)
+
+            flag = flags_dict.get(winner) if winner != "Draw" else ""
 
             st.markdown(
                 "<h2 style='text-align: center; color: white;'>The Winner 🏆</h2>",
@@ -176,22 +177,6 @@ with st.container():
                 unsafe_allow_html=True,
             )
             st.markdown(
-                f"<h1 style='text-align: center; color: white;'>{winner} {flags_dict.get(winner)}</h1>",
+                f"<h1 style='text-align: center; color: white;'>{winner} {flag}</h1>",
                 unsafe_allow_html=True,
             )
-            # st.markdown(
-            #     f"<h3 style='text-align: center; color: white;'>By {prob} Probability </h3>",
-            #     unsafe_allow_html=True,
-            # )
-
-# ------------------------------------------------------------------------
-#  st.image("app/assets/Asset_2.png", width=20)
-
-# Footer container
-# with st.container():
-#     st.write('Made by [Your Name](https://www.linkedin.com/in/your-name/)')
-#     st.write('Source code available on [GitHub]')
-
-
-# Result container
-# Display the final result
