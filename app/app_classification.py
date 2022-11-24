@@ -3,9 +3,10 @@ import collections
 import sys
 import time
 from pathlib import Path
-import numpy as np
+
 import emoji
 import flag
+import numpy as np
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -14,20 +15,55 @@ sys.path.insert(0, "")
 from prediction_functions import get_prediction_cls
 
 
-def img_to_bytes(img_path):
+
+def img_to_bytes(img_path: str) -> str:
+    """Converts an image file to bytes.
+
+    Parameters
+    ----------
+    img_path : str
+        Path to the image file.
+
+    Returns
+    -------
+    str
+        Bytes of the image file.
+    """
     img_bytes = Path(img_path).read_bytes()
     encoded = base64.b64encode(img_bytes).decode()
     return encoded
 
 
-def img_to_html(width, img_path):
+def img_to_html(width: int, img_path: str) -> str:
+    """Converts an image file to HTML.
+
+    Parameters
+    ----------
+    width : int
+        Width of the image.
+    img_path : str
+        Path to the image file.
+
+    Returns
+    -------
+    str
+        HTML format of the image.
+    """
     img_html = "<img width={}pt src='data:image/png;base64,{}' class='img-fluid'>".format(
         width, img_to_bytes(img_path)
     )
     return img_html
 
 
-def add_bg_from_local(image_file):
+def add_bg_from_local(image_file) -> None:
+    """Adds a background image to the Streamlit app.
+
+    Parameters
+    ----------
+    image_file : str
+        Path to the image file.
+    """
+
     with open(image_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
     st.markdown(
@@ -155,18 +191,49 @@ with st.container():
             team_2_prob_winning_prob = round(prediction[3], 3)
             draw_prob = round(prediction[4], 3)
 
-            sorted_results = {team_1:team_1_winning_prob, 
-                              team_2:team_2_prob_winning_prob,
-                              "Draw":draw_prob}
-            sorted_results = {k: v for k, v in sorted(sorted_results.items(), key=lambda item: item[1])}
+            sorted_results = {
+                team_1: team_1_winning_prob,
+                team_2: team_2_prob_winning_prob,
+                "Draw": draw_prob,
+            }
+            sorted_results = {
+                k: v
+                for k, v in sorted(
+                    sorted_results.items(), key=lambda item: item[1]
+                )
+            }
 
-            flag_first = flags_dict.get(list(sorted_results.keys())[2]) if flags_dict.get(list(sorted_results.keys())[2]) != None else ""
-            flag_second = flags_dict.get(list(sorted_results.keys())[1]) if flags_dict.get(list(sorted_results.keys())[1]) != None else ""
-            flag_third = flags_dict.get(list(sorted_results.keys())[0]) if flags_dict.get(list(sorted_results.keys())[0]) != None else ""
+            flag_first = (
+                flags_dict.get(list(sorted_results.keys())[2])
+                if flags_dict.get(list(sorted_results.keys())[2]) != None
+                else ""
+            )
+            flag_second = (
+                flags_dict.get(list(sorted_results.keys())[1])
+                if flags_dict.get(list(sorted_results.keys())[1]) != None
+                else ""
+            )
+            flag_third = (
+                flags_dict.get(list(sorted_results.keys())[0])
+                if flags_dict.get(list(sorted_results.keys())[0]) != None
+                else ""
+            )
 
-            name_first = list(sorted_results.keys())[2] if list(sorted_results.keys())[2] != None else "Draw"
-            name_second = list(sorted_results.keys())[1] if list(sorted_results.keys())[1] != None else "Draw"
-            name_third = list(sorted_results.keys())[0] if list(sorted_results.keys())[0] != None else "Draw"
+            name_first = (
+                list(sorted_results.keys())[2]
+                if list(sorted_results.keys())[2] != None
+                else "Draw"
+            )
+            name_second = (
+                list(sorted_results.keys())[1]
+                if list(sorted_results.keys())[1] != None
+                else "Draw"
+            )
+            name_third = (
+                list(sorted_results.keys())[0]
+                if list(sorted_results.keys())[0] != None
+                else "Draw"
+            )
 
             prob_first = list(sorted_results.values())[2]
             prob_second = list(sorted_results.values())[1]
@@ -191,5 +258,3 @@ with st.container():
                 f"<h1 style='text-align: center; color: white;'>{name_third} {flag_third}: {prob_third}%</h1>",
                 unsafe_allow_html=True,
             )
-
-
