@@ -36,7 +36,14 @@ for regressor in os.listdir("models/regression"):
 
 encoder = load(open("models/encoders/countries_encoder.pkl", "rb"))
 
-cls_model = load(open("models/classification/LogisticRegression.pkl", "rb"))
+cls_models_list: list = []
+for classifier in os.listdir("models/classification"):
+    if classifier.endswith(".pkl") and not classifier.startswith("XGB"):
+        cls_model = load(
+            open(os.path.join("models/classification", classifier), "rb")
+        )
+        cls_models_list.append(cls_model)
+# cls_model = load(open("models/classification/LogisticRegression.pkl", "rb"))
 
 
 def reg_predict(data: pd.DataFrame) -> pd.DataFrame:
@@ -136,7 +143,12 @@ def cls_predict(data: pd.DataFrame) -> Tuple[Iterable[float]]:
     )
 
     # Make predictions
-    probs = cls_model.predict_proba(data)[0]
+    # probs = cls_model.predict_proba(data)[0]
+    probs_list: list = []
+    for model in cls_models_list:
+        probs_list.append(model.predict_proba(data)[0])
+
+    probs = np.mean(probs_list, axis=0)
 
     team_1_winning_prob = np.round(probs[1], 3) * 100
     team_2_winning_prob = np.round(probs[2], 3) * 100
