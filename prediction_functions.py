@@ -1,5 +1,6 @@
 import os
 from pickle import load
+from typing import Iterable, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -35,7 +36,14 @@ for regressor in os.listdir("models/regression"):
 
 encoder = load(open("models/encoders/countries_encoder.pkl", "rb"))
 
-cls_model = load(open("models/classification/LogisticRegression.pkl", "rb"))
+cls_models_list: list = []
+for classifier in os.listdir("models/classification"):
+    if classifier.endswith(".pkl") and not classifier.startswith("XGB"):
+        cls_model = load(
+            open(os.path.join("models/classification", classifier), "rb")
+        )
+        cls_models_list.append(cls_model)
+# cls_model = load(open("models/classification/LogisticRegression.pkl", "rb"))
 
 
 def reg_predict(data: pd.DataFrame) -> pd.DataFrame:
@@ -75,7 +83,7 @@ def reg_predict(data: pd.DataFrame) -> pd.DataFrame:
     return prediction
 
 
-def get_prediction_reg(team_1, team_2):
+def get_prediction_reg(team_1: str, team_2: str):
     mask_1 = (lookup_table["1st_team"] == team_1) & (
         lookup_table["2nd_team"] == team_2
     )
@@ -106,23 +114,21 @@ def get_prediction_reg(team_1, team_2):
 
     return (first_team, second_team, prediction)
 
-def cls_predict(data: pd.DataFrame):
-    """_summary_
+
+def cls_predict(data: pd.DataFrame) -> Tuple[Iterable[float]]:
+    """Make predictions using a trained model
 
     Parameters
     ----------
     data : pd.DataFrame
-        _description_
-    float : _type_
-        _description_
-    float : _type_
-        _description_
+        Dataframe containing the data to predict
 
     Returns
     -------
-    _type_
-        _description_
-    """   
+    Tuple[Iterable[float]]
+        Tuple containing the predictions
+
+    """
 
     # Encode categorical features
     data.loc[0, "1st_team"] = encoder.transform(
@@ -137,15 +143,42 @@ def cls_predict(data: pd.DataFrame):
     )
 
     # Make predictions
-    probs = cls_model.predict_proba(data)[0]
+    # probs = cls_model.predict_proba(data)[0]
+    probs_list: list = []
+    for model in cls_models_list:
+        probs_list.append(model.predict_proba(data)[0])
 
-    team_1_winning_prob = np.round(probs[1], 3)*100
-    team_2_winning_prob = np.round(probs[2], 3)*100
-    draw_prob = np.round(probs[0], 3)*100
+    probs = np.mean(probs_list, axis=0)
+
+    team_1_winning_prob = np.round(probs[1], 3) * 100
+    team_2_winning_prob = np.round(probs[2], 3) * 100
+    draw_prob = np.round(probs[0], 3) * 100
 
     return (team_1_winning_prob, team_2_winning_prob, draw_prob)
 
-def get_prediction_cls(team_1, team_2):
+
+def get_prediction_cls(
+    team_1: str, team_2: str
+) -> Tuple[Iterable[Union[str, float]]]:
+    """Get prediction for a match
+
+    Parameters
+    ----------
+    team_1 : str
+        Name of the first team
+    team_2 : str
+        Name of the second team
+
+    Returns
+    -------
+    Tuple[Iterable[Union[str, float]]]
+        Tuple containing the name of the first team, the name of the second team and the prediction
+
+    Raises
+    ------
+    ValueError
+        If no match in the lookup table is found
+    """
 
     mask_1 = (lookup_table["1st_team"] == team_1) & (
         lookup_table["2nd_team"] == team_2
@@ -163,22 +196,38 @@ def get_prediction_cls(team_1, team_2):
         team_1_stats.reset_index(drop=True, inplace=True)
         first_team = team_1_stats.loc[0, "1st_team"]
         second_team = team_1_stats.loc[0, "2nd_team"]
-        team_1_winning_prob, team_2_winning_prob, draw_prob = cls_predict(team_1_stats)
-    
+        team_1_winning_prob, team_2_winning_prob, draw_prob = cls_predict(
+            team_1_stats
+        )
+
     elif not team_2_stats.empty:
         team_2_stats.reset_index(drop=True, inplace=True)
         first_team = team_2_stats.loc[0, "1st_team"]
         second_team = team_2_stats.loc[0, "2nd_team"]
-        team_1_winning_prob, team_2_winning_prob, draw_prob = cls_predict(team_2_stats)
-    
+        team_1_winning_prob, team_2_winning_prob, draw_prob = cls_predict(
+            team_2_stats
+        )
+
     else:
         team_1_winning_prob = np.nan
         team_2_winning_prob = np.nan
         draw_prob = np.nan
         raise ValueError("No match in the lookup table found")
 
-    print(first_team, second_team, team_1_winning_prob, team_2_winning_prob, draw_prob)
-    return (first_team, second_team, team_1_winning_prob, team_2_winning_prob, draw_prob)
+    print(
+        first_team,
+        second_team,
+        team_1_winning_prob,
+        team_2_winning_prob,
+        draw_prob,
+    )
+    return (
+        first_team,
+        second_team,
+        team_1_winning_prob,
+        team_2_winning_prob,
+        draw_prob,
+    )
 
 
 if __name__ == "__main__":

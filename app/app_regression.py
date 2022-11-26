@@ -14,20 +14,53 @@ sys.path.insert(0, "")
 from prediction_functions import get_prediction
 
 
-def img_to_bytes(img_path):
+def img_to_bytes(img_path: str) -> str:
+    """Converts an image file to bytes.
+
+    Parameters
+    ----------
+    img_path : str
+        Path to the image file.
+
+    Returns
+    -------
+    str
+        Bytes of the image file.
+    """
     img_bytes = Path(img_path).read_bytes()
     encoded = base64.b64encode(img_bytes).decode()
     return encoded
 
 
-def img_to_html(width, img_path):
+def img_to_html(width: int, img_path: str) -> str:
+    """Converts an image file to HTML.
+
+    Parameters
+    ----------
+    width : int
+        Width of the image.
+    img_path : str
+        Path to the image file.
+
+    Returns
+    -------
+    str
+        HTML format of the image.
+    """
     img_html = "<img width={}pt src='data:image/png;base64,{}' class='img-fluid'>".format(
         width, img_to_bytes(img_path)
     )
     return img_html
 
 
-def add_bg_from_local(image_file):
+def add_bg_from_local(image_file) -> None:
+    """Adds a background image to the Streamlit app.
+
+    Parameters
+    ----------
+    image_file : str
+        Path to the image file.
+    """
     with open(image_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
     st.markdown(
