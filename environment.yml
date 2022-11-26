@@ -17,3 +17,4 @@ dependencies:
     - emoji-country-flag
     - pre-commit
     - black
+    - xgboost
