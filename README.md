@@ -8,4 +8,4 @@
 	```$~ sh ./setup.sh```
 	
 2. run `Streamlit` application:
-```$~ streamlit run app/app.py```
+```$~ streamlit run app/app_classification.py```
