@@ -5,7 +5,11 @@
 ## usage
 
 1. create `conda` virtual environment by running this command:
-	```$~ sh ./setup.sh```
+	```
+    $~ sh ./setup.sh
+    ```
 	
 2. run `Streamlit` application:
-```$~ streamlit run app/app_classification.py```
+    ```
+    $~ streamlit run app/app_classification.py
+    ```
