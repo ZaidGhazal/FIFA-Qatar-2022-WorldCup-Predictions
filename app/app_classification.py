@@ -10,9 +10,10 @@ import numpy as np
 import streamlit as st
 import streamlit.components.v1 as components
 
+sys.path.insert(0, "")
+
 from prediction_functions import get_prediction_binary_cls
 
-sys.path.insert(0, "")
 
 
 def img_to_bytes(img_path: str) -> str:
@@ -108,36 +109,20 @@ with st.container():
 flags_dict = {
     "Argentina": flag.flag(":AR:"),
     "Portugal": flag.flag(":PT:"),
-    "Ecuador": flag.flag(":EC:"),
     "Netherlands": flag.flag(":NL:"),
     "Brazil": flag.flag(":BR:"),
     "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "Iran": flag.flag(":IR:"),
     "United States": flag.flag(":US:"),
-    "Wales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
-    "Mexico": flag.flag(":MX:"),
     "Poland": flag.flag(":PL:"),
     "France": flag.flag(":FR:"),
     "Australia": flag.flag(":AU:"),
-    "Denmark": flag.flag(":DK:"),
-    "Tunisia": flag.flag(":TN:"),
-    "Costa Rica": flag.flag(":CR:"),
-    "Germany": flag.flag(":DE:"),
     "Japan": flag.flag(":JP:"),
     "Korea Republic": flag.flag(":KR:"),
     "Croatia": flag.flag(":HR:"),
-    "Canada": flag.flag(":CA:"),
     "Morocco": flag.flag(":MA:"),
-    "Serbia": flag.flag(":RS:"),
-    "Switzerland": flag.flag(":CH:"),
-    "Cameroon": flag.flag(":CM:"),
-    "Ghana": flag.flag(":GH:"),
-    "Uruguay": flag.flag(":UY:"),
-    "Saudi Arabia": flag.flag(":SA:"),
     "Senegal": flag.flag(":SN:"),
     "Spain": flag.flag(":ES:"),
-    "Qatar": flag.flag(":QA:"),
-    "Belgium": flag.flag(":BE:"),
+    "Switzerland": flag.flag(":CH:"),
 }
 teams_flags_ls = [team + " " + flag for team, flag in flags_dict.items()]
 teams_flags_ls.insert(0, "Select Team")
