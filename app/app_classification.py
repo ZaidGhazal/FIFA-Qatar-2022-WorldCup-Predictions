@@ -12,7 +12,7 @@ import streamlit.components.v1 as components
 
 sys.path.insert(0, "")
 
-from prediction_functions import get_prediction_cls
+from prediction_functions import get_prediction_binary_cls
 
 
 
@@ -109,36 +109,20 @@ with st.container():
 flags_dict = {
     "Argentina": flag.flag(":AR:"),
     "Portugal": flag.flag(":PT:"),
-    "Ecuador": flag.flag(":EC:"),
     "Netherlands": flag.flag(":NL:"),
     "Brazil": flag.flag(":BR:"),
     "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "Iran": flag.flag(":IR:"),
     "United States": flag.flag(":US:"),
-    "Wales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
-    "Mexico": flag.flag(":MX:"),
     "Poland": flag.flag(":PL:"),
     "France": flag.flag(":FR:"),
     "Australia": flag.flag(":AU:"),
-    "Denmark": flag.flag(":DK:"),
-    "Tunisia": flag.flag(":TN:"),
-    "Costa Rica": flag.flag(":CR:"),
-    "Germany": flag.flag(":DE:"),
     "Japan": flag.flag(":JP:"),
     "Korea Republic": flag.flag(":KR:"),
     "Croatia": flag.flag(":HR:"),
-    "Canada": flag.flag(":CA:"),
     "Morocco": flag.flag(":MA:"),
-    "Serbia": flag.flag(":RS:"),
-    "Switzerland": flag.flag(":CH:"),
-    "Cameroon": flag.flag(":CM:"),
-    "Ghana": flag.flag(":GH:"),
-    "Uruguay": flag.flag(":UY:"),
-    "Saudi Arabia": flag.flag(":SA:"),
     "Senegal": flag.flag(":SN:"),
     "Spain": flag.flag(":ES:"),
-    "Qatar": flag.flag(":QA:"),
-    "Belgium": flag.flag(":BE:"),
+    "Switzerland": flag.flag(":CH:"),
 }
 teams_flags_ls = [team + " " + flag for team, flag in flags_dict.items()]
 teams_flags_ls.insert(0, "Select Team")
@@ -182,19 +166,17 @@ with st.container():
         with st.spinner(""):
             time.sleep(3)
             print(country1, country2)
-            prediction = get_prediction_cls(
+            prediction = get_prediction_binary_cls(
                 country1.rsplit(" ", 1)[0], country2.rsplit(" ", 1)[0]
             )
             team_1 = prediction[0]
             team_2 = prediction[1]
             team_1_winning_prob = round(prediction[2], 3)
             team_2_prob_winning_prob = round(prediction[3], 3)
-            draw_prob = round(prediction[4], 3)
 
             sorted_results = {
                 team_1: team_1_winning_prob,
                 team_2: team_2_prob_winning_prob,
-                "Draw": draw_prob,
             }
             sorted_results = {
                 k: v
@@ -204,40 +186,30 @@ with st.container():
             }
 
             flag_first = (
-                flags_dict.get(list(sorted_results.keys())[2])
-                if flags_dict.get(list(sorted_results.keys())[2]) != None
+                flags_dict.get(list(sorted_results.keys())[1])
+                if flags_dict.get(list(sorted_results.keys())[1]) is not None
                 else ""
             )
             flag_second = (
-                flags_dict.get(list(sorted_results.keys())[1])
-                if flags_dict.get(list(sorted_results.keys())[1]) != None
-                else ""
-            )
-            flag_third = (
                 flags_dict.get(list(sorted_results.keys())[0])
-                if flags_dict.get(list(sorted_results.keys())[0]) != None
+                if flags_dict.get(list(sorted_results.keys())[0]) is not None
                 else ""
             )
 
             name_first = (
-                list(sorted_results.keys())[2]
-                if list(sorted_results.keys())[2] != None
+                list(sorted_results.keys())[1]
+                if list(sorted_results.keys())[1] is not None
                 else "Draw"
             )
             name_second = (
-                list(sorted_results.keys())[1]
-                if list(sorted_results.keys())[1] != None
-                else "Draw"
-            )
-            name_third = (
                 list(sorted_results.keys())[0]
-                if list(sorted_results.keys())[0] != None
+                if list(sorted_results.keys())[0] is not None
                 else "Draw"
             )
 
-            prob_first = list(sorted_results.values())[2]
-            prob_second = list(sorted_results.values())[1]
-            prob_third = list(sorted_results.values())[0]
+            prob_first = list(sorted_results.values())[1]
+            prob_second = list(sorted_results.values())[0]
+
             st.markdown(
                 "<h2 style='text-align: center; color: white;'>Winning Chances 🏆</h2>",
                 unsafe_allow_html=True,
@@ -252,9 +224,5 @@ with st.container():
             )
             st.markdown(
                 f"<h1 style='text-align: center; color: white;'>{name_second} {flag_second}: {prob_second}%</h1>",
-                unsafe_allow_html=True,
-            )
-            st.markdown(
-                f"<h1 style='text-align: center; color: white;'>{name_third} {flag_third}: {prob_third}%</h1>",
                 unsafe_allow_html=True,
             )
