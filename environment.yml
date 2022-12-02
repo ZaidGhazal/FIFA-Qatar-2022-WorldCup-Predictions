@@ -18,4 +18,4 @@ dependencies:
     - pre-commit
     - black
     - xgboost
-    - streamlit
+
