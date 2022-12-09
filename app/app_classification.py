@@ -112,17 +112,9 @@ flags_dict = {
     "Netherlands": flag.flag(":NL:"),
     "Brazil": flag.flag(":BR:"),
     "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "United States": flag.flag(":US:"),
-    "Poland": flag.flag(":PL:"),
     "France": flag.flag(":FR:"),
-    "Australia": flag.flag(":AU:"),
-    "Japan": flag.flag(":JP:"),
-    "Korea Republic": flag.flag(":KR:"),
     "Croatia": flag.flag(":HR:"),
     "Morocco": flag.flag(":MA:"),
-    "Senegal": flag.flag(":SN:"),
-    "Spain": flag.flag(":ES:"),
-    "Switzerland": flag.flag(":CH:"),
 }
 teams_flags_ls = [team + " " + flag for team, flag in flags_dict.items()]
 teams_flags_ls.insert(0, "Select Team")
